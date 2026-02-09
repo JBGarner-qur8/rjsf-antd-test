@@ -1,5 +1,5 @@
-import RJSFForm from "@rjsf/antd";
-//import RJSFForm from "@rjsf/core";
+import { generateTemplates, generateTheme } from "@rjsf/antd";
+import { withTheme } from "@rjsf/core";
 import type Form from "@rjsf/core";
 import type { RJSFSchema } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
@@ -8,6 +8,7 @@ import { useRef } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { ErrorList } from "./ErrorList";
 
 const SOME_SCHEMA: RJSFSchema = {
   type: "object",
@@ -19,6 +20,18 @@ const SOME_SCHEMA: RJSFSchema = {
     }
   }
 };
+
+const templates = generateTemplates();
+
+const theme = generateTheme();
+
+const RJSFForm = withTheme({
+  ...theme,
+  templates: {
+    ...templates,
+    ErrorListTemplate: ErrorList,
+  }
+})
 
 function App() {
   const formRef = useRef<Form>(null)
